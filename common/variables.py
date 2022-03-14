@@ -15,3 +15,6 @@ MAX_PACKAGE_LENGTH = 1024
 # JIM
 ACTION = 'action'
 TIME = 'time'
+USER = 'user'
+ACCOUNT_NAME = 'account_name'
+ERROR = 'error'

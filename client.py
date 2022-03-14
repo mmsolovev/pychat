@@ -1,13 +1,12 @@
 import sys
+import time
 from socket import *
-from common.variables import DEFAULT_IP, DEFAULT_PORT, ENCODING
+
+from common.utils import send_message, get_message
+from common.variables import DEFAULT_IP, DEFAULT_PORT, ENCODING, ACTION, TIME, USER, ACCOUNT_NAME, ERROR
 
 
 def main():
-    """
-
-    """
-
     try:
         server_ip = sys.argv[1]
         server_port = int(sys.argv[2])
@@ -22,11 +21,31 @@ def main():
 
     s = socket(AF_INET, SOCK_STREAM)
     s.connect((server_ip, server_port))
-    msg = 'Привет, сервер'
-    s.send(msg.encode(ENCODING))
-    data = s.recv(1000000)
-    print('Сообщение от сервера: ', data.decode('utf-8'), ', длиной ', len(data), ' байт')
-    s.close()
+    message = presence()
+    send_message(s, message)
+    answer = check_answer(get_message(s))
+    print(answer)
 
 
-main()
+def check_answer(message):
+
+    if 'response' in message:
+        if message['response'] == 200:
+            return '200 : OK'
+        return f'400 : {message[ERROR]}'
+    raise ValueError
+
+
+def presence(account_name='Guest'):
+    out = {
+        ACTION: 'presence',
+        TIME: time.time(),
+        USER: {
+            ACCOUNT_NAME: account_name
+        }
+    }
+    return out
+
+
+if __name__ == '__main__':
+    main()
