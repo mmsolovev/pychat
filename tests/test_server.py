@@ -11,10 +11,10 @@ class TestServer(unittest.TestCase):
     def test_200(self):
         self.assertEqual(check_message({ACTION: 'presence', TIME: 1.1, USER: {ACCOUNT_NAME: 'Guest'}}), self.answer_200)
 
-    def user_wrong(self):
+    def test_user_wrong(self):
         self.assertEqual(check_message({ACTION: 'presence', TIME: 1.1, USER: {ACCOUNT_NAME: 'Wrong'}}), self.answer_400)
 
-    def user_no(self):
+    def test_user_no(self):
         self.assertEqual(check_message({ACTION: 'presence', TIME: 1.1}), self.answer_400)
 
     def test_action_wrong(self):
