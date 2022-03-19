@@ -3,7 +3,7 @@ import time
 from socket import *
 
 from common.utils import send_message, get_message
-from common.variables import DEFAULT_IP, DEFAULT_PORT, ENCODING, ACTION, TIME, USER, ACCOUNT_NAME, ERROR
+from common.variables import DEFAULT_IP, DEFAULT_PORT, ACTION, TIME, USER, ACCOUNT_NAME, ERROR
 
 
 def main():

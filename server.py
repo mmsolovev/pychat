@@ -1,19 +1,18 @@
 import sys
 from socket import *
-import time
 
 from common.utils import get_message, send_message
-from common.variables import DEFAULT_IP, DEFAULT_PORT, ENCODING, ACTION, TIME, USER, ACCOUNT_NAME, ERROR
+from common.variables import DEFAULT_PORT, ACTION, TIME, USER, ACCOUNT_NAME, ERROR
 
 
 def main():
     try:
         if '-p' in sys.argv:
             listen_port = int(sys.argv[sys.argv.index('-p') + 1])
+        else:
+            listen_port = DEFAULT_PORT
             if listen_port < 1024 or listen_port > 65535:
                 raise ValueError
-    except IndexError:
-        listen_port = DEFAULT_PORT
     except ValueError:
         print('Номер порта должен быть в диапазоне от 1024 до 65535')
         sys.exit(1)
@@ -21,8 +20,11 @@ def main():
     try:
         if '-a' in sys.argv:
             listen_ip = sys.argv[sys.argv.index('-a') + 1]
+        else:
+            listen_ip = ''
     except IndexError:
-        listen_ip = ''
+        print('После параметра -а должен быть указан адрес')
+        sys.exit(1)
 
     s = socket(AF_INET, SOCK_STREAM)
     s.bind((listen_ip, listen_port))
