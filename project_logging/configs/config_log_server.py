@@ -2,7 +2,10 @@ import logging
 import os
 import sys
 import logging.handlers
-sys.path.append('../logs/')
+
+from common.variables import LOGGING_LEVEL
+
+sys.path.append('../logs')
 
 
 format_server = logging.Formatter('%(asctime)s %(levelname)s %(filename)s %(message)s')
@@ -19,7 +22,7 @@ log_file.setFormatter(format_server)
 app_log = logging.getLogger('server')
 app_log.addHandler(crit_hand)
 app_log.addHandler(log_file)
-app_log.setLevel(logging.DEBUG)
+app_log.setLevel(LOGGING_LEVEL)
 
 if __name__ == '__main__':
     app_log.critical('Критическая ошибка')
